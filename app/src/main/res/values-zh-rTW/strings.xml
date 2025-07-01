@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">分包APK安裝器</string>
+
+    <!-- Error Dialog -->
+    <string name="error_dialog_title">發生錯誤</string>
+    <string name="close">關閉</string>
+    <string name="unknown_error">發生未知錯誤</string>
+    <string name="stack_trace">堆疊追蹤</string>
+    <string name="copied_to_clipboard">已複製！</string>
+    <string name="copy">複製</string>
+    <string name="error_details">錯誤詳情</string>
+
+    <!-- Home Screen -->
+    <string name="split_apk_installer_description">從檔案或資料夾安裝分包APK</string>
+    <string name="choose_installation_source">選擇安裝來源</string>
+    <string name="install_from_file">從檔案安裝</string>
+    <string name="install_from_folder">從資料夾安裝</string>
+    <string name="supported_formats">支援的格式</string>
+    <string name="supported_formats_description">• 檔案：所有基於zip的檔案（如 .apks、.apkm、.zip）\n• 資料夾：包含分包APK檔案的任何資料夾</string>
+
+    <!-- APK List Screen -->
+    <string name="select_apks_to_install">選擇要安裝的APK</string>
+    <string name="back">返回</string>
+    <string name="reading_apk_package">正在讀取APK包…</string>
+    <string name="scanning_folder">正在掃描資料夾…</string>
+    <string name="no_apk_files_found_in_package">在所選包中未找到APK檔案</string>
+    <string name="no_apk_files_found_in_folder">在所選資料夾中未找到APK檔案</string>
+    <string name="error_reading_package">讀取包時出錯：%s</string>
+    <string name="error_scanning_folder">掃描資料夾時出錯：%s</string>
+    <string name="go_back">返回</string>
+    <string name="warning_no_base_apk">警告：未找到base.apk。安裝無法繼續。</string>
+    <string name="install_selected_apks">安裝選中的APK（%d個）</string>
+    <string name="base_apk_tag">基礎</string>
+    <string name="required_for_installation">安裝必需</string>
+    <string name="please_select_at_least_one_apk">請至少選擇一個APK進行安裝</string>
+    <string name="base_apk_must_be_selected">必須選擇base.apk</string>
+
+    <!-- Installation Screen -->
+    <string name="installing_apks">正在安裝APK</string>
+    <string name="installation_progress">安裝進度</string>
+    <string name="installing">正在安裝…</string>
+    <string name="completed">已完成</string>
+    <string name="failed">失敗</string>
+    <string name="installation_logs">安裝日誌</string>
+    <string name="done">完成</string>
+    <string name="cancel_installation_title">取消安裝？</string>
+    <string name="cancel_installation_message">您確定要取消安裝過程嗎？這將停止當前安裝並返回到上一個畫面。</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+
+    <!-- Installation Log Messages -->
+    <string name="starting_apk_installation">開始APK安裝過程…</string>
+    <string name="extracting_apk_files">正在提取APK檔案…</string>
+    <string name="no_apk_files_extracted">無法提取APK檔案</string>
+    <string name="extracted_files_count">已提取%d個APK檔案</string>
+    <string name="cleaning_up_temp_files">正在清理臨時檔案…</string>
+    <string name="creating_installation_session">正在建立安裝工作階段…</string>
+    <string name="installation_session_created">安裝工作階段已建立：%d</string>
+    <string name="writing_file_to_session">正在將%s寫入工作階段…</string>
+    <string name="written_file_success">✓ 已寫入：%s</string>
+    <string name="all_files_written_to_session">所有APK檔案已寫入工作階段</string>
+    <string name="committing_installation_session">正在提交安裝工作階段…</string>
+    <string name="installation_session_committed">安裝工作階段已提交。正在等待系統回應…</string>
+    <string name="error_during_installation">安裝過程中出錯：%s</string>
+    <string name="installation_completed_success_message">安裝成功完成！</string>
+    <string name="installation_failed_error_message">安裝失敗：%s</string>
+
+    <!-- File Size Units -->
+    <string name="file_size_bytes">%d B</string>
+    <string name="file_size_kb">%.1f KB</string>
+    <string name="file_size_mb">%.1f MB</string>
+    <string name="file_size_gb">%.1f GB</string>
+
+    <!-- Progress and Status -->
+    <string name="progress_percentage">%d%%</string>
+    <string name="no_logs_available">無可用日誌…</string>
+
+    <!-- Installation Result Messages -->
+    <string name="installation_completed_successfully">安裝成功完成</string>
+    <string name="installation_failed_generic">安裝失敗</string>
+    <string name="installation_aborted_by_user">使用者取消了安裝</string>
+    <string name="installation_blocked">安裝被阻止</string>
+    <string name="installation_conflict">發生安裝衝突</string>
+    <string name="package_incompatible">套件不相容</string>
+    <string name="package_invalid">套件無效</string>
+    <string name="insufficient_storage">儲存空間不足</string>
+    <string name="unknown_installation_error">未知安裝錯誤</string>
+    <string name="files_processed_format" formatted="false">已處理 %d / %d 個檔案</string>
+
+    <!-- PackageInstallerManager Error Messages -->
+    <string name="deleted_temp_file">已刪除臨時檔案：%s</string>
+    <string name="failed_delete_temp_file" formatted="false">刪除臨時檔案%s失敗：%s</string>
+</resources>

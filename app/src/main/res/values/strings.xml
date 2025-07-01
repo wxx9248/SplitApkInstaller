@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">Split APK Installer</string>
+
+    <!-- Error Dialog -->
+    <string name="error_dialog_title">Error Occurred</string>
+    <string name="close">Close</string>
+    <string name="unknown_error">Unknown error occurred</string>
+    <string name="stack_trace">Stack Trace</string>
+    <string name="copied_to_clipboard">Copied!</string>
+    <string name="copy">Copy</string>
+    <string name="error_details">Error Details</string>
+
+    <!-- Home Screen -->
+    <string name="split_apk_installer_description">Install split APK packages from files or folders</string>
+    <string name="choose_installation_source">Choose Installation Source</string>
+    <string name="install_from_file">Install from File</string>
+    <string name="install_from_folder">Install from Folder</string>
+    <string name="supported_formats">Supported Formats</string>
+    <string name="supported_formats_description">• Files: All zip-based files (e.g. .apks, .apkm, .zip)\n• Folders: Any folder containing split APK files</string>
+
+    <!-- APK List Screen -->
+    <string name="select_apks_to_install">Select APKs to Install</string>
+    <string name="back">Back</string>
+    <string name="reading_apk_package">Reading APK package…</string>
+    <string name="scanning_folder">Scanning folder…</string>
+    <string name="no_apk_files_found_in_package">No APK files found in the selected package</string>
+    <string name="no_apk_files_found_in_folder">No APK files found in the selected folder</string>
+    <string name="error_reading_package">Error reading package: %s</string>
+    <string name="error_scanning_folder">Error scanning folder: %s</string>
+    <string name="go_back">Go Back</string>
+    <string name="warning_no_base_apk">Warning: No base.apk found. Installation cannot continue.</string>
+    <string name="install_selected_apks">Install Selected APKs (%d)</string>
+    <string name="base_apk_tag">BASE</string>
+    <string name="required_for_installation">Required for installation</string>
+    <string name="please_select_at_least_one_apk">Please select at least one APK to install</string>
+    <string name="base_apk_must_be_selected">base.apk must be selected for installation</string>
+
+    <!-- Installation Screen -->
+    <string name="installing_apks">Installing APKs</string>
+    <string name="installation_progress">Installation Progress</string>
+    <string name="installing">Installing…</string>
+    <string name="completed">Completed</string>
+    <string name="failed">Failed</string>
+    <string name="installation_logs">Installation Logs</string>
+    <string name="done">Done</string>
+    <string name="cancel_installation_title">Cancel Installation?</string>
+    <string name="cancel_installation_message">Are you sure you want to cancel the installation process? This will stop the current installation and return to the previous screen.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- Installation Log Messages -->
+    <string name="starting_apk_installation">Starting APK installation process…</string>
+    <string name="extracting_apk_files">Extracting APK files…</string>
+    <string name="no_apk_files_extracted">No APK files could be extracted</string>
+    <string name="extracted_files_count">Extracted %d APK files</string>
+    <string name="cleaning_up_temp_files">Cleaning up temporary files…</string>
+    <string name="creating_installation_session">Creating installation session…</string>
+    <string name="installation_session_created">Installation session created: %d</string>
+    <string name="writing_file_to_session">Writing %s to session…</string>
+    <string name="written_file_success">✓ Written: %s</string>
+    <string name="all_files_written_to_session">All APK files written to session</string>
+    <string name="committing_installation_session">Committing installation session…</string>
+    <string name="installation_session_committed">Installation session committed. Waiting for system response…</string>
+    <string name="error_during_installation">Error during installation: %s</string>
+    <string name="installation_completed_success_message">Installation completed successfully!</string>
+    <string name="installation_failed_error_message">Installation failed: %s</string>
+
+    <!-- File Size Units -->
+    <string name="file_size_bytes">%d B</string>
+    <string name="file_size_kb">%.1f KB</string>
+    <string name="file_size_mb">%.1f MB</string>
+    <string name="file_size_gb">%.1f GB</string>
+
+    <!-- Progress and Status -->
+    <string name="progress_percentage">%d%%</string>
+    <string name="no_logs_available">No logs available…</string>
+
+    <!-- Installation Result Messages -->
+    <string name="installation_completed_successfully">Installation completed successfully</string>
+    <string name="installation_failed_generic">Installation failed</string>
+    <string name="installation_aborted_by_user">Installation was aborted by user</string>
+    <string name="installation_blocked">Installation was blocked</string>
+    <string name="installation_conflict">Installation conflict occurred</string>
+    <string name="package_incompatible">Package is incompatible</string>
+    <string name="package_invalid">Package is invalid</string>
+    <string name="insufficient_storage">Insufficient storage</string>
+    <string name="unknown_installation_error">Unknown installation error</string>
+    <string name="files_processed_format" formatted="false">%d / %d files processed</string>
+
+    <!-- PackageInstallerManager Error Messages -->
+    <string name="deleted_temp_file">Deleted temporary file: %s</string>
+    <string name="failed_delete_temp_file" formatted="false">Failed to delete temporary file %s: %s</string>
+</resources>

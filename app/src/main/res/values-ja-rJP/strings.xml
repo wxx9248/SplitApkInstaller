@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">分割APKインストーラー</string>
+
+    <!-- Error Dialog -->
+    <string name="error_dialog_title">エラーが発生しました</string>
+    <string name="close">閉じる</string>
+    <string name="unknown_error">不明なエラーが発生しました</string>
+    <string name="stack_trace">スタックトレース</string>
+    <string name="copied_to_clipboard">コピーしました！</string>
+    <string name="copy">コピー</string>
+    <string name="error_details">エラー詳細</string>
+
+    <!-- Home Screen -->
+    <string name="split_apk_installer_description">ファイルまたはフォルダから分割APKパッケージをインストール</string>
+    <string name="choose_installation_source">インストール元を選択</string>
+    <string name="install_from_file">ファイルからインストール</string>
+    <string name="install_from_folder">フォルダからインストール</string>
+    <string name="supported_formats">対応形式</string>
+    <string name="supported_formats_description">• ファイル：すべてのzipベースファイル（例：.apks、.apkm、.zip）\n• フォルダ：分割APKファイルを含む任意のフォルダ</string>
+
+    <!-- APK List Screen -->
+    <string name="select_apks_to_install">インストールするAPKを選択</string>
+    <string name="back">戻る</string>
+    <string name="reading_apk_package">APKパッケージを読み込み中…</string>
+    <string name="scanning_folder">フォルダをスキャン中…</string>
+    <string name="no_apk_files_found_in_package">選択されたパッケージにAPKファイルが見つかりません</string>
+    <string name="no_apk_files_found_in_folder">選択されたフォルダにAPKファイルが見つかりません</string>
+    <string name="error_reading_package">パッケージの読み込みエラー：%s</string>
+    <string name="error_scanning_folder">フォルダのスキャンエラー：%s</string>
+    <string name="go_back">戻る</string>
+    <string name="warning_no_base_apk">警告：base.apkが見つかりません。インストールを続行できません。</string>
+    <string name="install_selected_apks">選択されたAPKをインストール（%d個）</string>
+    <string name="base_apk_tag">ベース</string>
+    <string name="required_for_installation">インストールに必要</string>
+    <string name="please_select_at_least_one_apk">インストールするAPKを少なくとも1つ選択してください</string>
+    <string name="base_apk_must_be_selected">インストールにはbase.apkを選択する必要があります</string>
+
+    <!-- Installation Screen -->
+    <string name="installing_apks">APKをインストール中</string>
+    <string name="installation_progress">インストール進行状況</string>
+    <string name="installing">インストール中…</string>
+    <string name="completed">完了</string>
+    <string name="failed">失敗</string>
+    <string name="installation_logs">インストールログ</string>
+    <string name="done">完了</string>
+    <string name="cancel_installation_title">インストールをキャンセルしますか？</string>
+    <string name="cancel_installation_message">インストールプロセスをキャンセルしてもよろしいですか？現在のインストールが停止され、前の画面に戻ります。</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+
+    <!-- Installation Log Messages -->
+    <string name="starting_apk_installation">APKインストールプロセスを開始中…</string>
+    <string name="extracting_apk_files">APKファイルを抽出中…</string>
+    <string name="no_apk_files_extracted">APKファイルを抽出できませんでした</string>
+    <string name="extracted_files_count">%d個のAPKファイルを抽出しました</string>
+    <string name="cleaning_up_temp_files">一時ファイルをクリーンアップ中…</string>
+    <string name="creating_installation_session">インストールセッションを作成中…</string>
+    <string name="installation_session_created">インストールセッションが作成されました：%d</string>
+    <string name="writing_file_to_session">%sをセッションに書き込み中…</string>
+    <string name="written_file_success">✓ 書き込み完了：%s</string>
+    <string name="all_files_written_to_session">すべてのAPKファイルがセッションに書き込まれました</string>
+    <string name="committing_installation_session">インストールセッションをコミット中…</string>
+    <string name="installation_session_committed">インストールセッションがコミットされました。システムの応答を待機中…</string>
+    <string name="error_during_installation">インストール中にエラーが発生しました：%s</string>
+    <string name="installation_completed_success_message">インストールが正常に完了しました！</string>
+    <string name="installation_failed_error_message">インストールに失敗しました：%s</string>
+
+    <!-- File Size Units -->
+    <string name="file_size_bytes">%d B</string>
+    <string name="file_size_kb">%.1f KB</string>
+    <string name="file_size_mb">%.1f MB</string>
+    <string name="file_size_gb">%.1f GB</string>
+
+    <!-- Progress and Status -->
+    <string name="progress_percentage">%d%%</string>
+    <string name="no_logs_available">利用可能なログがありません…</string>
+
+    <!-- Installation Result Messages -->
+    <string name="installation_completed_successfully">インストールが正常に完了しました</string>
+    <string name="installation_failed_generic">インストールに失敗しました</string>
+    <string name="installation_aborted_by_user">ユーザーによってインストールが中止されました</string>
+    <string name="installation_blocked">インストールがブロックされました</string>
+    <string name="installation_conflict">インストールの競合が発生しました</string>
+    <string name="package_incompatible">パッケージに互換性がありません</string>
+    <string name="package_invalid">パッケージが無効です</string>
+    <string name="insufficient_storage">ストレージ容量が不足しています</string>
+    <string name="unknown_installation_error">不明なインストールエラー</string>
+    <string name="files_processed_format" formatted="false">%d / %d ファイルを処理しました</string>
+
+    <!-- PackageInstallerManager Error Messages -->
+    <string name="deleted_temp_file">一時ファイルを削除しました：%s</string>
+    <string name="failed_delete_temp_file" formatted="false">一時ファイル %s の削除に失敗しました：%s</string>
+</resources>
