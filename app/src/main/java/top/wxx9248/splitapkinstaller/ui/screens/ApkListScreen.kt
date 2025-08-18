@@ -441,6 +441,55 @@ fun ApkListScreenPreview() {
 
 @Preview(showBackground = true)
 @Composable
+fun ApkListTopBarPreview() {
+    MaterialTheme {
+        ApkListTopBar(
+            onNavigateBack = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ApkListContentPreview() {
+    MaterialTheme {
+        ApkListContent(
+            showContent = true,
+            apks = listOf(
+                ApkInfo(name = "base.apk", size = 1024000L, isBase = true),
+                ApkInfo(name = "config.apk", size = 512000L, isBase = false),
+                ApkInfo(name = "split_config.apk", size = 256000L, isBase = false)
+            ),
+            selectedApks = setOf(
+                ApkInfo(name = "base.apk", size = 1024000L, isBase = true),
+                ApkInfo(name = "config.apk", size = 512000L, isBase = false)
+            ),
+            onSelectionChanged = { _, _ -> },
+            packageUri = "content://example.apk".toUri(),
+            isFile = true,
+            onNavigateToInstallation = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun InstallButtonPreview() {
+    MaterialTheme {
+        InstallButton(
+            selectedApks = setOf(
+                ApkInfo(name = "base.apk", size = 1024000L, isBase = true),
+                ApkInfo(name = "config.apk", size = 512000L, isBase = false)
+            ),
+            packageUri = "content://example.apk".toUri(),
+            isFile = true,
+            onNavigateToInstallation = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
 fun ApkListItemPreview() {
     MaterialTheme {
         ApkListItem(
@@ -449,6 +498,32 @@ fun ApkListItemPreview() {
             ), isSelected = true, onSelectionChanged = { })
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun LoadingContentPreview() {
+    MaterialTheme {
+        LoadingContent(isFile = true)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ErrorContentPreview() {
+    MaterialTheme {
+        ErrorContent(
+            errorMessage = "Failed to extract APK files", onNavigateBack = { })
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NoBaseApkWarningPreview() {
+    MaterialTheme {
+        NoBaseApkWarning()
+    }
+}
+
 
 private fun handleExtractionResult(
     result: ApkUtil.Result<List<ApkInfo>>,
@@ -512,29 +587,4 @@ private fun getValidationError(
     }
 
     return null
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoadingContentPreview() {
-    MaterialTheme {
-        LoadingContent(isFile = true)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ErrorContentPreview() {
-    MaterialTheme {
-        ErrorContent(
-            errorMessage = "Failed to extract APK files", onNavigateBack = { })
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun NoBaseApkWarningPreview() {
-    MaterialTheme {
-        NoBaseApkWarning()
-    }
 }

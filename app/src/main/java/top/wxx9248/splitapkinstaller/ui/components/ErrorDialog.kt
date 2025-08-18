@@ -260,6 +260,39 @@ private fun CloseButton(onDismiss: () -> Unit) {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun ErrorDialogPreview() {
+    val sampleException = RuntimeException("Sample error message for preview")
+    ErrorDialog(
+        throwable = sampleException,
+        onDismiss = {}
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ErrorDialogWithLongMessagePreview() {
+    val longMessageException = IllegalStateException(
+        "This is a very long error message that should demonstrate how the dialog handles lengthy error descriptions and wraps text appropriately within the available space."
+    )
+    ErrorDialog(
+        throwable = longMessageException,
+        onDismiss = {}
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ErrorDialogWithCausePreview() {
+    val causeException = IllegalArgumentException("Invalid argument provided")
+    val mainException = RuntimeException("Operation failed", causeException)
+    ErrorDialog(
+        throwable = mainException,
+        onDismiss = {}
+    )
+}
+
 private fun copyStackTraceToClipboard(
     context: Context,
     throwable: Throwable,
@@ -315,37 +348,4 @@ private fun formatFullStackTrace(throwable: Throwable): String {
             cause = cause.cause
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ErrorDialogPreview() {
-    val sampleException = RuntimeException("Sample error message for preview")
-    ErrorDialog(
-        throwable = sampleException,
-        onDismiss = {}
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ErrorDialogWithLongMessagePreview() {
-    val longMessageException = IllegalStateException(
-        "This is a very long error message that should demonstrate how the dialog handles lengthy error descriptions and wraps text appropriately within the available space."
-    )
-    ErrorDialog(
-        throwable = longMessageException,
-        onDismiss = {}
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ErrorDialogWithCausePreview() {
-    val causeException = IllegalArgumentException("Invalid argument provided")
-    val mainException = RuntimeException("Operation failed", causeException)
-    ErrorDialog(
-        throwable = mainException,
-        onDismiss = {}
-    )
 }

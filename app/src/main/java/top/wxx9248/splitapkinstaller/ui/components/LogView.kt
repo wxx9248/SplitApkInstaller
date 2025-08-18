@@ -155,17 +155,6 @@ fun LogView(
     }
 }
 
-/**
- * Formats a list of log entries into a single text string
- */
-private fun formatLogsAsText(logs: List<LogEntry>): String {
-    val timeFormatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-    return logs.joinToString("\n") { log ->
-        val timestamp = timeFormatter.format(Date(log.timestamp))
-        "[$timestamp] ${log.level.name}: ${log.message}"
-    }
-}
-
 // Preview composables for testing
 @Preview(showBackground = true)
 @Composable
@@ -215,5 +204,16 @@ fun LogViewCustomTitlePreview() {
             emptyMessage = "No custom logs found",
             modifier = Modifier.padding(16.dp)
         )
+    }
+}
+
+/**
+ * Formats a list of log entries into a single text string
+ */
+private fun formatLogsAsText(logs: List<LogEntry>): String {
+    val timeFormatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+    return logs.joinToString("\n") { log ->
+        val timestamp = timeFormatter.format(Date(log.timestamp))
+        "[$timestamp] ${log.level.name}: ${log.message}"
     }
 }

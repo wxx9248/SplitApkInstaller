@@ -177,6 +177,75 @@ private fun InfoSection() {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    MaterialTheme {
+        HomeScreen(
+            onNavigateToApkList = {})
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun TitleSectionPreview() {
+    MaterialTheme {
+        TitleSection()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ActionButtonsSectionPreview() {
+    val mockLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { }
+
+    MaterialTheme {
+        ActionButtonsSection(
+            filePickerLauncher = mockLauncher,
+            folderPickerLauncher = mockLauncher
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun FilePickerButtonPreview() {
+    val mockLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { }
+
+    MaterialTheme {
+        FilePickerButton(
+            filePickerLauncher = mockLauncher
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun FolderPickerButtonPreview() {
+    val mockLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { }
+
+    MaterialTheme {
+        FolderPickerButton(
+            folderPickerLauncher = mockLauncher
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun InfoSectionPreview() {
+    MaterialTheme {
+        InfoSection()
+    }
+}
+
+
 private fun createFilePickerIntent(): Intent {
     return Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
         addCategory(Intent.CATEGORY_OPENABLE)
@@ -212,13 +281,4 @@ private fun handleFolderPickerResult(
 
     val uri = result.data?.data ?: return
     onNavigateToApkList(ApkListRoute(uri.toString(), false))
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    MaterialTheme {
-        HomeScreen(
-            onNavigateToApkList = {})
-    }
 }

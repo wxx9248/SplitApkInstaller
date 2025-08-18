@@ -74,7 +74,7 @@ fun InstallationScreen(
 
     var logs by remember { mutableStateOf<List<LogEntry>>(emptyList()) }
     var isInstalling by remember { mutableStateOf(false) }
-    var progress by remember { mutableIntStateOf(0) }
+    var progress by remember { mutableStateOf(0) }
     var totalProgress by remember { mutableIntStateOf(0) }
     var installationComplete by remember { mutableStateOf(false) }
     var installationSuccess by remember { mutableStateOf(false) }
@@ -335,11 +335,44 @@ private fun CompletionSection(
 fun InstallationScreenPreview() {
     MaterialTheme {
         InstallationScreen(
-            packageUri = "content://example.apks".toUri(),
+            packageUri = "content://example.apk".toUri(),
             isFile = true,
-            selectedApkNames = emptyList(),
-            onNavigateBack = { },
-            onNavigateToHome = { })
+            selectedApkNames = listOf("base.apk", "config.apk"),
+            onNavigateBack = {},
+            onNavigateToHome = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun InstallationTopBarPreview() {
+    MaterialTheme {
+        InstallationTopBar(
+            onNavigateBack = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun InstallationContentPreview() {
+    MaterialTheme {
+        InstallationContent(
+            showContent = true,
+            isInstalling = true,
+            installationComplete = false,
+            installationSuccess = false,
+            progress = 3,
+            totalProgress = 10,
+            logs = listOf(
+                LogEntry(level = LogLevel.INFO, message = "Starting installation..."),
+                LogEntry(level = LogLevel.INFO, message = "Processing APK files..."),
+                LogEntry(level = LogLevel.INFO, message = "Installing base.apk...")
+            ),
+            resultMessage = null,
+            onNavigateBack = {}
+        )
     }
 }
 

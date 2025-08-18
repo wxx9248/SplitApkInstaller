@@ -28,6 +28,7 @@ import top.wxx9248.splitapkinstaller.ui.screens.HomeScreen
 import top.wxx9248.splitapkinstaller.ui.screens.InstallationRoute
 import top.wxx9248.splitapkinstaller.ui.screens.InstallationScreen
 import top.wxx9248.splitapkinstaller.ui.theme.SplitApkInstallerTheme
+import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,5 +113,13 @@ fun SplitApkInstallerApp(intent: Intent? = null) {
                     })
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SplitApkInstallerAppPreview() {
+    SplitApkInstallerTheme {
+        SplitApkInstallerApp()
     }
 }
