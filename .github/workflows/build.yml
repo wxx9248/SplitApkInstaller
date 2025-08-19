@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 # Global permissions for the workflow
 permissions:
@@ -54,7 +54,7 @@ jobs:
 
   # Job for building release artifacts and creating GitHub release
   build-release:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Required for creating releases, tags, and uploading assets
