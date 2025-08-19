@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,7 +29,6 @@ import top.wxx9248.splitapkinstaller.ui.screens.HomeScreen
 import top.wxx9248.splitapkinstaller.ui.screens.InstallationRoute
 import top.wxx9248.splitapkinstaller.ui.screens.InstallationScreen
 import top.wxx9248.splitapkinstaller.ui.theme.SplitApkInstallerTheme
-import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
