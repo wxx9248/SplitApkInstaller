@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main ]
 
+# Global permissions for the workflow
+permissions:
+  pull-requests: read  # Required for PR workflows
+
 env:
   MAIN_PROJECT_MODULE: app
 
@@ -14,6 +18,9 @@ jobs:
   build-debug:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read  # Read repository code
+      actions: read   # Read workflow artifacts
 
     steps:
       - name: Checkout code
@@ -49,6 +56,9 @@ jobs:
   build-release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for creating releases, tags, and uploading assets
+      actions: read    # Read workflow artifacts
 
     steps:
       - name: Checkout code
