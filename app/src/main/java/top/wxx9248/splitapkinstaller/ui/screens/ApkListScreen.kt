@@ -61,6 +61,14 @@ data class ApkListRoute(
     val packageUriString: String, val isFile: Boolean
 )
 
+/**
+ * Main APK list screen that displays extracted APK files and allows selection for installation.
+ *
+ * @param packageUri URI of the selected package (file or folder)
+ * @param isFile Whether the URI points to a file (true) or folder (false)
+ * @param onNavigateBack Callback to navigate back to the previous screen
+ * @param onNavigateToInstallation Callback to navigate to installation screen with selected APKs
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApkListScreen(
@@ -146,6 +154,11 @@ fun ApkListScreen(
     }
 }
 
+/**
+ * Top app bar for the APK list screen with back navigation.
+ *
+ * @param onNavigateBack Callback to navigate back to the previous screen
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ApkListTopBar(
@@ -166,6 +179,11 @@ private fun ApkListTopBar(
     })
 }
 
+/**
+ * Loading content displayed while APK extraction is in progress.
+ *
+ * @param isFile Whether the source is a file (true) or folder (false)
+ */
 @Composable
 private fun LoadingContent(
     isFile: Boolean
@@ -189,6 +207,12 @@ private fun LoadingContent(
     }
 }
 
+/**
+ * Error content displayed when APK extraction fails.
+ *
+ * @param errorMessage The error message to display
+ * @param onNavigateBack Callback to navigate back to the previous screen
+ */
 @Composable
 private fun ErrorContent(
     errorMessage: String, onNavigateBack: () -> Unit
@@ -229,6 +253,17 @@ private fun ErrorContent(
     }
 }
 
+/**
+ * Main content displaying the list of APK files with selection capabilities.
+ *
+ * @param showContent Whether to show the content with animation
+ * @param apks List of extracted APK information
+ * @param selectedApks Set of currently selected APKs
+ * @param onSelectionChanged Callback when APK selection changes
+ * @param packageUri URI of the source package
+ * @param isFile Whether the source is a file (true) or folder (false)
+ * @param onNavigateToInstallation Callback to navigate to installation screen
+ */
 @Composable
 private fun ApkListContent(
     showContent: Boolean,
@@ -271,6 +306,9 @@ private fun ApkListContent(
     }
 }
 
+/**
+ * Warning component displayed when no base APK is selected.
+ */
 @Composable
 private fun NoBaseApkWarning() {
     Card(
@@ -298,6 +336,14 @@ private fun NoBaseApkWarning() {
     }
 }
 
+/**
+ * Install button that validates selection and navigates to installation screen.
+ *
+ * @param selectedApks Set of currently selected APKs
+ * @param packageUri URI of the source package
+ * @param isFile Whether the source is a file (true) or folder (false)
+ * @param onNavigateToInstallation Callback to navigate to installation screen
+ */
 @Composable
 private fun InstallButton(
     selectedApks: Set<ApkInfo>,
@@ -351,6 +397,13 @@ private fun InstallButton(
     }
 }
 
+/**
+ * Individual APK list item with selection checkbox and APK information.
+ *
+ * @param apk The APK information to display
+ * @param isSelected Whether this APK is currently selected
+ * @param onSelectionChanged Callback when selection state changes
+ */
 @Composable
 private fun ApkListItem(
     apk: ApkInfo, isSelected: Boolean, onSelectionChanged: (Boolean) -> Unit
@@ -525,6 +578,15 @@ fun NoBaseApkWarningPreview() {
 }
 
 
+/**
+ * Handles the result of APK extraction operation.
+ *
+ * @param result The extraction result containing APKs or error
+ * @param context Android context for accessing resources
+ * @param isFile Whether the source is a file (true) or folder (false)
+ * @param onSuccess Callback called with extracted APKs on success
+ * @param onError Callback called with error information on failure
+ */
 private fun handleExtractionResult(
     result: ApkUtil.Result<List<ApkInfo>>,
     context: android.content.Context,
@@ -552,6 +614,12 @@ private fun handleExtractionResult(
     onSuccess(result.entries)
 }
 
+/**
+ * Selects initial APKs based on predefined rules (base APK and recommended splits).
+ *
+ * @param apks List of available APKs
+ * @return Set of initially selected APKs
+ */
 private fun selectInitialApks(apks: List<ApkInfo>): Set<ApkInfo> {
     val baseApks = apks.filter { it.isBase }
     return if (baseApks.isNotEmpty()) {
@@ -561,6 +629,14 @@ private fun selectInitialApks(apks: List<ApkInfo>): Set<ApkInfo> {
     }
 }
 
+/**
+ * Updates APK selection by adding or removing an APK from the current selection.
+ *
+ * @param currentSelection Current set of selected APKs
+ * @param apk The APK to add or remove
+ * @param isSelected Whether to add (true) or remove (false) the APK
+ * @return Updated set of selected APKs
+ */
 private fun updateApkSelection(
     currentSelection: Set<ApkInfo>, apk: ApkInfo, isSelected: Boolean
 ): Set<ApkInfo> {
@@ -575,6 +651,13 @@ private fun updateApkSelection(
     }
 }
 
+/**
+ * Validates the current APK selection and returns an error message if invalid.
+ *
+ * @param context Android context for accessing string resources
+ * @param selectedApks Set of currently selected APKs
+ * @return Error message if validation fails, null if valid
+ */
 private fun getValidationError(
     context: android.content.Context, selectedApks: Set<ApkInfo>
 ): String? {

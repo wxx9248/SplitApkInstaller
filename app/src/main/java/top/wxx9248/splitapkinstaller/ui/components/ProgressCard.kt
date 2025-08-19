@@ -93,6 +93,12 @@ fun ProgressCard(
     }
 }
 
+/**
+ * Header section of the progress card displaying title and status text.
+ *
+ * @param state Current progress state
+ * @param texts Customizable status texts configuration
+ */
 @Composable
 private fun ProgressHeader(
     state: ProgressState,
@@ -152,6 +158,13 @@ private fun ProgressHeader(
     }
 }
 
+/**
+ * Details section showing progress numbers and files processed information.
+ *
+ * @param progress Current progress value
+ * @param totalProgress Total progress value
+ * @param filesProcessedFormat Format string for displaying files processed
+ */
 @Composable
 private fun ProgressDetails(
     progress: Int,

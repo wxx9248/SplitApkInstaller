@@ -27,6 +27,14 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+/**
+ * Main theme composable for the Split APK Installer application.
+ * Provides Material 3 theming with support for dark mode and dynamic colors.
+ *
+ * @param darkTheme Whether to use dark theme (defaults to system setting)
+ * @param dynamicColor Whether to use dynamic colors on Android 12+ (defaults to true)
+ * @param content The composable content to be themed
+ */
 @Composable
 fun SplitApkInstallerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

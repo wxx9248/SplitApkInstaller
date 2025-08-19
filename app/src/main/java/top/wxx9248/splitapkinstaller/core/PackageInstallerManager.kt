@@ -14,14 +14,52 @@ import top.wxx9248.splitapkinstaller.ui.components.LogLevel
 import top.wxx9248.splitapkinstaller.util.ApkUtil
 import java.io.File
 
+/**
+ * Manages APK installation using Android's PackageInstaller API.
+ * Handles extraction of APK files from ZIP archives or folders and installs them as split APKs.
+ *
+ * @param context The application context used for accessing system services and resources
+ */
 class PackageInstallerManager(private val context: Context) {
 
+    /**
+     * Callback interface for receiving installation progress updates and results.
+     */
     interface InstallationCallback {
+        /**
+         * Called when a new log entry is generated during installation.
+         *
+         * @param log The log entry containing level and message information
+         */
         fun onLogUpdate(log: LogEntry)
+
+        /**
+         * Called to report installation progress.
+         *
+         * @param progress Current progress value
+         * @param total Total progress value
+         */
         fun onProgress(progress: Int, total: Int)
+
+        /**
+         * Called when installation is complete.
+         *
+         * @param success Whether the installation was successful
+         * @param resultCode The result code from the installation process, if available
+         * @param message A descriptive message about the installation result
+         */
         fun onInstallationComplete(success: Boolean, resultCode: Int?, message: String?)
     }
 
+    /**
+     * Installs selected APK files from a package (ZIP file or folder).
+     * This is the main entry point for APK installation.
+     *
+     * @param packageUri URI pointing to the package containing APK files
+     * @param isFile Whether the package is a file (true) or folder (false)
+     * @param selectedApkNames List of APK file names to install
+     * @param callback Callback interface for receiving progress updates and results
+     */
     suspend fun installApks(
         packageUri: Uri,
         isFile: Boolean,
@@ -94,6 +132,12 @@ class PackageInstallerManager(private val context: Context) {
         }
     }
 
+    /**
+     * Handles installation errors by logging them and notifying the callback.
+     *
+     * @param e The exception that occurred during installation
+     * @param callback The callback to notify about the error
+     */
     private fun handleInstallationError(
         e: Exception,
         callback: InstallationCallback
@@ -117,6 +161,13 @@ class PackageInstallerManager(private val context: Context) {
         )
     }
 
+    /**
+     * Creates a new PackageInstaller session for installing APK files.
+     *
+     * @param packageInstaller The PackageInstaller instance to use
+     * @param callback The callback to notify about session creation progress
+     * @return The session ID of the created installation session
+     */
     private fun createInstallationSession(
         packageInstaller: PackageInstaller,
         callback: InstallationCallback
@@ -143,6 +194,13 @@ class PackageInstallerManager(private val context: Context) {
         return sessionId
     }
 
+    /**
+     * Writes APK files to the installation session.
+     *
+     * @param session The PackageInstaller session to write files to
+     * @param apkFiles List of APK files to write to the session
+     * @param callback The callback to notify about write progress
+     */
     private fun writeApkFilesToSession(
         session: PackageInstaller.Session,
         apkFiles: List<File>,
@@ -179,6 +237,12 @@ class PackageInstallerManager(private val context: Context) {
         )
     }
 
+    /**
+     * Commits the installation session to start the actual installation process.
+     *
+     * @param session The PackageInstaller session to commit
+     * @param callback The callback to notify about commit progress
+     */
     private fun commitInstallationSession(
         session: PackageInstaller.Session,
         callback: InstallationCallback
@@ -208,6 +272,13 @@ class PackageInstallerManager(private val context: Context) {
         )
     }
 
+    /**
+     * Handles errors that occur during session operations.
+     *
+     * @param session The PackageInstaller session where the error occurred
+     * @param e The exception that occurred
+     * @param callback The callback to notify about the error
+     */
     private fun handleSessionError(
         session: PackageInstaller.Session,
         e: Exception,
@@ -233,6 +304,14 @@ class PackageInstallerManager(private val context: Context) {
         )
     }
 
+    /**
+     * Extracts selected APK files from a ZIP archive to temporary storage.
+     *
+     * @param packageUri URI pointing to the ZIP file
+     * @param selectedApkNames List of APK file names to extract
+     * @param callback The callback to notify about extraction progress
+     * @return List of extracted temporary files
+     */
     private suspend fun extractApksFromZipFile(
         packageUri: Uri,
         selectedApkNames: List<String>,
@@ -248,6 +327,14 @@ class PackageInstallerManager(private val context: Context) {
         result.entries ?: emptyList()
     }
 
+    /**
+     * Extracts selected APK files from a folder to temporary storage.
+     *
+     * @param packageUri URI pointing to the folder
+     * @param selectedApkNames List of APK file names to extract
+     * @param callback The callback to notify about extraction progress
+     * @return List of extracted temporary files
+     */
     private suspend fun extractApksFromFolder(
         packageUri: Uri,
         selectedApkNames: List<String>,
@@ -263,6 +350,12 @@ class PackageInstallerManager(private val context: Context) {
         result.entries ?: emptyList()
     }
 
+    /**
+     * Performs the actual APK installation using Android's PackageInstaller API.
+     *
+     * @param apkFiles List of APK files to install
+     * @param callback The callback to notify about installation progress
+     */
     private suspend fun installUsingPackageInstaller(
         apkFiles: List<File>,
         callback: InstallationCallback
@@ -284,6 +377,12 @@ class PackageInstallerManager(private val context: Context) {
         }
     }
 
+    /**
+     * Cleans up temporary files created during the installation process.
+     *
+     * @param tempFiles List of temporary files to delete
+     * @param callback The callback to notify about cleanup progress
+     */
     private fun cleanupTempFiles(
         tempFiles: List<File>,
         callback: InstallationCallback

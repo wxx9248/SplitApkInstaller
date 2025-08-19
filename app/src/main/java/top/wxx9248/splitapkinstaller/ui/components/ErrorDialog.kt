@@ -46,6 +46,18 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import top.wxx9248.splitapkinstaller.R
 
+/**
+ * Error dialog component that displays exception information with stack trace and copy functionality.
+ *
+ * @param throwable The exception/throwable to display
+ * @param onDismiss Callback to dismiss the dialog
+ */
+/**
+ * Error dialog component that displays exception information with stack trace and copy functionality.
+ *
+ * @param throwable The exception/throwable to display
+ * @param onDismiss Callback invoked when the dialog is dismissed
+ */
 @Composable
 fun ErrorDialog(
     throwable: Throwable,
@@ -77,6 +89,14 @@ fun ErrorDialog(
     }
 }
 
+/**
+ * Main content of the error dialog containing header, message, stack trace, and close button.
+ *
+ * @param throwable The exception/throwable to display
+ * @param copySuccessMessage Whether copy success message should be shown
+ * @param onCopySuccess Callback invoked when stack trace is successfully copied
+ * @param onDismiss Callback invoked when the dialog is dismissed
+ */
 @Composable
 private fun ErrorDialogContent(
     throwable: Throwable,
@@ -117,6 +137,11 @@ private fun ErrorDialogContent(
     }
 }
 
+/**
+ * Header section of the error dialog with title and close button.
+ *
+ * @param onDismiss Callback invoked when the close button is pressed
+ */
 @Composable
 private fun ErrorDialogHeader(onDismiss: () -> Unit) {
     Row(
@@ -141,6 +166,11 @@ private fun ErrorDialogHeader(onDismiss: () -> Unit) {
     }
 }
 
+/**
+ * Error message section displaying the exception message.
+ *
+ * @param throwable The exception/throwable whose message to display
+ */
 @Composable
 private fun ErrorMessage(throwable: Throwable) {
     Text(
@@ -152,6 +182,13 @@ private fun ErrorMessage(throwable: Throwable) {
     )
 }
 
+/**
+ * Stack trace section with header and scrollable content.
+ *
+ * @param throwable The exception/throwable whose stack trace to display
+ * @param copySuccessMessage Whether copy success message should be shown
+ * @param onCopySuccess Callback invoked when stack trace is successfully copied
+ */
 @Composable
 private fun StackTraceSection(
     throwable: Throwable,
@@ -179,6 +216,12 @@ private fun StackTraceSection(
     StackTraceContent(throwable = throwable)
 }
 
+/**
+ * Header for the stack trace section with copy button.
+ *
+ * @param copySuccessMessage Whether copy success message should be shown
+ * @param onCopyClick Callback invoked when copy button is clicked
+ */
 @Composable
 private fun StackTraceHeader(
     copySuccessMessage: Boolean,
@@ -202,6 +245,11 @@ private fun StackTraceHeader(
     }
 }
 
+/**
+ * Copy button for copying stack trace to clipboard.
+ *
+ * @param onClick Callback invoked when button is clicked
+ */
 @Composable
 private fun CopyButton(onClick: () -> Unit) {
     OutlinedButton(
@@ -222,6 +270,11 @@ private fun CopyButton(onClick: () -> Unit) {
     }
 }
 
+/**
+ * Scrollable content displaying the formatted stack trace.
+ *
+ * @param throwable The exception/throwable whose stack trace to display
+ */
 @Composable
 private fun StackTraceContent(throwable: Throwable) {
     LazyColumn(
@@ -245,6 +298,11 @@ private fun StackTraceContent(throwable: Throwable) {
     }
 }
 
+/**
+ * Close button for dismissing the error dialog.
+ *
+ * @param onDismiss Callback invoked when button is clicked
+ */
 @Composable
 private fun CloseButton(onDismiss: () -> Unit) {
     Button(
@@ -293,6 +351,13 @@ fun ErrorDialogWithCausePreview() {
     )
 }
 
+/**
+ * Copies the stack trace of a throwable to the system clipboard.
+ *
+ * @param context Android context for accessing clipboard service
+ * @param throwable The exception/throwable whose stack trace to copy
+ * @param onSuccess Callback invoked when copy operation succeeds
+ */
 private fun copyStackTraceToClipboard(
     context: Context,
     throwable: Throwable,
@@ -309,6 +374,12 @@ private fun copyStackTraceToClipboard(
     onSuccess()
 }
 
+/**
+ * Formats a throwable's stack trace for display in the dialog.
+ *
+ * @param throwable The exception/throwable to format
+ * @return Formatted stack trace string for display
+ */
 private fun formatStackTrace(throwable: Throwable): String {
     return buildString {
         appendLine("${throwable::class.java.simpleName}: ${throwable.message}")
@@ -328,6 +399,12 @@ private fun formatStackTrace(throwable: Throwable): String {
     }
 }
 
+/**
+ * Formats a throwable's complete stack trace for clipboard copying.
+ *
+ * @param throwable The exception/throwable to format
+ * @return Complete formatted stack trace string for copying
+ */
 private fun formatFullStackTrace(throwable: Throwable): String {
     return buildString {
         appendLine("Error: ${throwable.message}")

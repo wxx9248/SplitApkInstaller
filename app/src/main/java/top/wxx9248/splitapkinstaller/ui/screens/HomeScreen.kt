@@ -31,6 +31,11 @@ import top.wxx9248.splitapkinstaller.R
 @Serializable
 object HomeRoute
 
+/**
+ * Main home screen composable that displays the app's landing page with file and folder picker options.
+ *
+ * @param onNavigateToApkList Callback function to navigate to the APK list screen with the selected route
+ */
 @Composable
 fun HomeScreen(
     onNavigateToApkList: (ApkListRoute) -> Unit
@@ -65,6 +70,9 @@ fun HomeScreen(
     }
 }
 
+/**
+ * Displays the title section of the home screen with the app name.
+ */
 @Composable
 private fun TitleSection() {
     Column(
@@ -87,6 +95,12 @@ private fun TitleSection() {
     }
 }
 
+/**
+ * Displays the action buttons section with file and folder picker buttons.
+ *
+ * @param filePickerLauncher Activity result launcher for file picker intent
+ * @param folderPickerLauncher Activity result launcher for folder picker intent
+ */
 @Composable
 private fun ActionButtonsSection(
     filePickerLauncher: androidx.activity.result.ActivityResultLauncher<Intent>,
@@ -112,6 +126,11 @@ private fun ActionButtonsSection(
     }
 }
 
+/**
+ * Displays a button that launches the file picker when clicked.
+ *
+ * @param filePickerLauncher Activity result launcher for file picker intent
+ */
 @Composable
 private fun FilePickerButton(
     filePickerLauncher: androidx.activity.result.ActivityResultLauncher<Intent>
@@ -131,6 +150,11 @@ private fun FilePickerButton(
     }
 }
 
+/**
+ * Displays a button that launches the folder picker when clicked.
+ *
+ * @param folderPickerLauncher Activity result launcher for folder picker intent
+ */
 @Composable
 private fun FolderPickerButton(
     folderPickerLauncher: androidx.activity.result.ActivityResultLauncher<Intent>
@@ -150,6 +174,9 @@ private fun FolderPickerButton(
     }
 }
 
+/**
+ * Displays the information section with app description and usage instructions.
+ */
 @Composable
 private fun InfoSection() {
     Card(
@@ -246,6 +273,11 @@ private fun InfoSectionPreview() {
 }
 
 
+/**
+ * Creates an intent for opening the system file picker.
+ *
+ * @return Intent configured for file selection with read permissions
+ */
 private fun createFilePickerIntent(): Intent {
     return Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
         addCategory(Intent.CATEGORY_OPENABLE)
@@ -255,12 +287,24 @@ private fun createFilePickerIntent(): Intent {
     }
 }
 
+/**
+ * Creates an intent for opening the system folder picker.
+ *
+ * @return Intent configured for folder selection with read permissions
+ */
 private fun createFolderPickerIntent(): Intent {
     return Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
 }
 
+/**
+ * Handles the result from the file picker activity.
+ *
+ * @param result The activity result from the file picker
+ * @param context Android context for accessing system services
+ * @param onNavigateToApkList Callback to navigate to APK list screen with selected file
+ */
 private fun handleFilePickerResult(
     result: androidx.activity.result.ActivityResult,
     context: android.content.Context,
@@ -272,6 +316,13 @@ private fun handleFilePickerResult(
     onNavigateToApkList(ApkListRoute(uri.toString(), true))
 }
 
+/**
+ * Handles the result from the folder picker activity.
+ *
+ * @param result The activity result from the folder picker
+ * @param context Android context for accessing system services
+ * @param onNavigateToApkList Callback to navigate to APK list screen with selected folder
+ */
 private fun handleFolderPickerResult(
     result: androidx.activity.result.ActivityResult,
     context: android.content.Context,

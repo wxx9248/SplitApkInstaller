@@ -91,12 +91,12 @@ class MemoryLogger : Logger {
 }
 
 /**
- * LogView component for displaying logs in a scrollable text field
+ * A composable that displays a list of log entries in a scrollable card view.
  *
  * @param logs List of log entries to display
- * @param modifier Modifier for the component
- * @param title Optional title for the log section
- * @param emptyMessage Message to show when no logs are available
+ * @param modifier Modifier to be applied to the component
+ * @param title Title text displayed at the top of the log view
+ * @param emptyMessage Message displayed when no logs are available
  */
 @Composable
 fun LogView(
@@ -208,7 +208,10 @@ fun LogViewCustomTitlePreview() {
 }
 
 /**
- * Formats a list of log entries into a single text string
+ * Formats a list of log entries as a plain text string for copying or sharing.
+ *
+ * @param logs List of log entries to format
+ * @return Formatted text string containing all log entries
  */
 private fun formatLogsAsText(logs: List<LogEntry>): String {
     val timeFormatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())

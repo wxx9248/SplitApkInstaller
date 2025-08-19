@@ -59,6 +59,15 @@ data class InstallationRoute(
     val packageUriString: String, val isFile: Boolean, val selectedApkNamesString: String
 )
 
+/**
+ * Installation screen that manages the APK installation process with progress tracking and logging.
+ *
+ * @param packageUri URI of the source package (file or folder)
+ * @param isFile Whether the URI points to a file (true) or folder (false)
+ * @param selectedApkNames List of selected APK file names to install
+ * @param onNavigateBack Callback to navigate back to the previous screen
+ * @param onNavigateToHome Callback to navigate to the home screen
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InstallationScreen(
@@ -205,6 +214,11 @@ fun InstallationScreen(
     }
 }
 
+/**
+ * Top app bar for the installation screen with back navigation.
+ *
+ * @param onNavigateBack Callback to handle back navigation
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun InstallationTopBar(
@@ -227,6 +241,19 @@ private fun InstallationTopBar(
     })
 }
 
+/**
+ * Main content area of the installation screen that displays progress and logs.
+ *
+ * @param showContent Whether to show the content with animation
+ * @param isInstalling Whether installation is currently in progress
+ * @param installationComplete Whether installation has completed
+ * @param installationSuccess Whether installation was successful
+ * @param progress Current installation progress
+ * @param totalProgress Total number of APKs to install
+ * @param logs List of log entries to display
+ * @param resultMessage Final result message from installation
+ * @param onNavigateBack Callback to handle back navigation
+ */
 @Composable
 private fun InstallationContent(
     showContent: Boolean,
@@ -439,6 +466,19 @@ fun CompletionSectionErrorPreview() {
     }
 }
 
+/**
+ * Starts the APK installation process with progress tracking and logging.
+ *
+ * @param context Android context for installation operations
+ * @param packageUri URI of the source package (file or folder)
+ * @param isFile Whether the URI points to a file (true) or folder (false)
+ * @param selectedApkNames List of selected APK file names to install
+ * @param onInstallationStart Callback invoked when installation begins
+ * @param onLogUpdate Callback invoked when a new log entry is added
+ * @param onProgress Callback invoked when installation progress updates
+ * @param onComplete Callback invoked when installation completes successfully
+ * @param onError Callback invoked when installation encounters an error
+ */
 private suspend fun startInstallation(
     context: android.content.Context,
     packageUri: Uri,
@@ -479,6 +519,14 @@ private suspend fun startInstallation(
     }
 }
 
+/**
+ * Creates a final log entry based on installation result.
+ *
+ * @param context Android context for accessing string resources
+ * @param success Whether installation was successful
+ * @param message Result message from installation
+ * @return LogEntry representing the final installation result
+ */
 private fun createFinalLog(
     context: android.content.Context, success: Boolean, message: String?
 ): LogEntry {

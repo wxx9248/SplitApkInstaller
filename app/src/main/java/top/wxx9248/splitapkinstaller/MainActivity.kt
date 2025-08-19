@@ -30,6 +30,10 @@ import top.wxx9248.splitapkinstaller.ui.screens.InstallationRoute
 import top.wxx9248.splitapkinstaller.ui.screens.InstallationScreen
 import top.wxx9248.splitapkinstaller.ui.theme.SplitApkInstallerTheme
 
+/**
+ * Main activity for the Split APK Installer application.
+ * Handles app initialization, edge-to-edge display, and intent processing.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +51,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Main composable function that sets up the app's navigation and UI structure.
+ * Handles file intents and manages navigation between different screens.
+ *
+ * @param intent Optional intent that may contain file data for direct APK processing
+ */
 @Composable
 fun SplitApkInstallerApp(intent: Intent? = null) {
     val controller = rememberNavController()

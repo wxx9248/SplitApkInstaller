@@ -8,7 +8,19 @@ import top.wxx9248.splitapkinstaller.R
 import top.wxx9248.splitapkinstaller.core.PackageInstallerManager
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * BroadcastReceiver that handles installation results from Android's PackageInstaller.
+ * Receives installation status updates and notifies registered callbacks about the results.
+ */
 class InstallationResultReceiver : BroadcastReceiver() {
+
+    /**
+     * Receives and processes installation result broadcasts from the system.
+     * Handles various installation statuses and notifies appropriate callbacks.
+     *
+     * @param context The application context
+     * @param intent The broadcast intent containing installation result data
+     */
     override fun onReceive(context: Context, intent: Intent) {
         val status =
             intent.getIntExtra(PackageInstaller.EXTRA_STATUS, PackageInstaller.STATUS_FAILURE)
@@ -119,6 +131,14 @@ class InstallationResultReceiver : BroadcastReceiver() {
         }
     }
 
+    /**
+     * Notifies the registered callback about installation completion and cleans up.
+     *
+     * @param sessionId The installation session ID
+     * @param success Whether the installation was successful
+     * @param resultCode The result code from the installation process
+     * @param message A descriptive message about the installation result
+     */
     private fun notifyCallback(sessionId: Int, success: Boolean, resultCode: Int, message: String) {
         if (sessionId != -1) {
             val callback = pendingCallbacks[sessionId]
@@ -128,9 +148,18 @@ class InstallationResultReceiver : BroadcastReceiver() {
     }
 
     companion object {
+        /**
+         * Thread-safe map storing callbacks for pending installation sessions.
+         */
         private val pendingCallbacks =
             ConcurrentHashMap<Int, PackageInstallerManager.InstallationCallback>()
 
+        /**
+         * Registers a callback for a specific installation session.
+         *
+         * @param sessionId The installation session ID
+         * @param callback The callback to register for receiving installation results
+         */
         fun registerCallback(
             sessionId: Int,
             callback: PackageInstallerManager.InstallationCallback
@@ -138,6 +167,11 @@ class InstallationResultReceiver : BroadcastReceiver() {
             pendingCallbacks[sessionId] = callback
         }
 
+        /**
+         * Unregisters and removes a callback for a specific installation session.
+         *
+         * @param sessionId The installation session ID to unregister
+         */
         fun unregisterCallback(sessionId: Int) {
             pendingCallbacks.remove(sessionId)
         }
