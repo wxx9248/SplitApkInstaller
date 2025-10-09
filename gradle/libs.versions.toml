@@ -15,7 +15,7 @@ lifecycleLivedataKtx = "2.9.4"
 lifecycleViewmodelKtx = "2.9.4"
 lifecycleRuntimeKtx = "2.9.3"
 activityCompose = "1.11.0"
-composeBom = "2025.09.00"
+composeBom = "2025.10.00"
 navigationCompose = "2.9.5"
 
 [libraries]
