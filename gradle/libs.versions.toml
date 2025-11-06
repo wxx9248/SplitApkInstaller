@@ -16,7 +16,7 @@ lifecycleViewmodelKtx = "2.9.4"
 lifecycleRuntimeKtx = "2.9.3"
 activityCompose = "1.11.0"
 composeBom = "2025.09.00"
-navigationCompose = "2.9.5"
+navigationCompose = "2.9.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
