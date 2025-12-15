@@ -46,7 +46,7 @@ jobs:
         run: ./gradlew assembleDebug
 
       - name: Upload debug APK
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: debug-apk-${{ github.event.pull_request.number }}
           path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/debug/*.apk
@@ -103,7 +103,7 @@ jobs:
           cp ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/bundle/release/*.aab release-artifacts/ || true
 
       - name: Upload release artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: release-artifacts-v${{ env.VERSION_NAME }}
           path: release-artifacts/
