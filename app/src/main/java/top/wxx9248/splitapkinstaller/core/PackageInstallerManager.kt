@@ -11,7 +11,7 @@ import top.wxx9248.splitapkinstaller.R
 import top.wxx9248.splitapkinstaller.receiver.InstallationResultReceiver
 import top.wxx9248.splitapkinstaller.ui.components.LogEntry
 import top.wxx9248.splitapkinstaller.ui.components.LogLevel
-import top.wxx9248.splitapkinstaller.util.ApkUtil
+import top.wxx9248.splitapkinstaller.util.ApkSourceReader
 import java.io.File
 
 /**
@@ -317,7 +317,7 @@ class PackageInstallerManager(private val context: Context) {
         selectedApkNames: List<String>,
         callback: InstallationCallback
     ): List<File> = withContext(Dispatchers.IO) {
-        val result = ApkUtil.processZipForExtraction(context, packageUri, selectedApkNames)
+        val result = ApkSourceReader.processZipForExtraction(context, packageUri, selectedApkNames)
 
         if (result.isFailure) {
             throw result.error ?: Exception("Unknown error during ZIP extraction")
@@ -340,7 +340,7 @@ class PackageInstallerManager(private val context: Context) {
         selectedApkNames: List<String>,
         callback: InstallationCallback
     ): List<File> = withContext(Dispatchers.IO) {
-        val result = ApkUtil.processFolderForExtraction(context, packageUri, selectedApkNames)
+        val result = ApkSourceReader.processFolderForExtraction(context, packageUri, selectedApkNames)
 
         if (result.isFailure) {
             throw result.error ?: Exception("Unknown error during folder extraction")

@@ -56,6 +56,7 @@ import top.wxx9248.splitapkinstaller.core.ApkCacheManager
 import top.wxx9248.splitapkinstaller.model.ApkInfo
 import top.wxx9248.splitapkinstaller.model.SplitConfigType
 import top.wxx9248.splitapkinstaller.ui.components.ErrorDialog
+import top.wxx9248.splitapkinstaller.util.ApkSourceReader
 import top.wxx9248.splitapkinstaller.util.ApkUtil
 import top.wxx9248.splitapkinstaller.util.DeviceConfig
 import top.wxx9248.splitapkinstaller.util.DeviceConfigUtil
@@ -107,7 +108,7 @@ fun ApkListScreen(
                 showContent = true
             } else {
                 // Parse APKs and cache the result
-                val result = ApkUtil.readApksMetaFromPackage(
+                val result = ApkSourceReader.readApksMetaFromPackage(
                     context, packageUri, isFile
                 )
 
@@ -610,7 +611,7 @@ fun NoBaseApkWarningPreview() {
  * @param onError Callback called with error information on failure
  */
 private fun handleExtractionResult(
-    result: ApkUtil.Result<List<ApkInfo>>,
+    result: ApkSourceReader.Result<List<ApkInfo>>,
     context: android.content.Context,
     isFile: Boolean,
     onSuccess: (List<ApkInfo>) -> Unit,
