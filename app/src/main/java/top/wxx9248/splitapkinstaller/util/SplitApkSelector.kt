@@ -22,8 +22,16 @@ object SplitApkSelector {
         return apks.filterTo(mutableSetOf()) { apk ->
             when (val config = apk.splitConfigType) {
                 is SplitConfigType.None -> true
-                is SplitConfigType.Abi -> config.qualifier.equals(deviceConfig.primaryAbi, ignoreCase = true)
-                is SplitConfigType.Density -> selectDensity(config.qualifier, deviceConfig.densityQualifier)
+                is SplitConfigType.Abi -> config.qualifier.equals(
+                    deviceConfig.primaryAbi,
+                    ignoreCase = true
+                )
+
+                is SplitConfigType.Density -> selectDensity(
+                    config.qualifier,
+                    deviceConfig.densityQualifier
+                )
+
                 is SplitConfigType.Language -> selectLanguage(config.qualifier, deviceConfig, apks)
             }
         }
@@ -49,7 +57,12 @@ object SplitApkSelector {
         } else null
 
         // Try exact language+region match
-        if (deviceLangRegion != null && qualifiers.any { it.equals(deviceLangRegion, ignoreCase = true) }) {
+        if (deviceLangRegion != null && qualifiers.any {
+                it.equals(
+                    deviceLangRegion,
+                    ignoreCase = true
+                )
+            }) {
             return qualifier.equals(deviceLangRegion, ignoreCase = true)
         }
 

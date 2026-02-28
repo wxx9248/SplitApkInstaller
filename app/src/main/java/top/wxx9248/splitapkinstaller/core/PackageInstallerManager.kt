@@ -340,7 +340,8 @@ class PackageInstallerManager(private val context: Context) {
         selectedApkNames: List<String>,
         callback: InstallationCallback
     ): List<File> = withContext(Dispatchers.IO) {
-        val result = ApkSourceReader.processFolderForExtraction(context, packageUri, selectedApkNames)
+        val result =
+            ApkSourceReader.processFolderForExtraction(context, packageUri, selectedApkNames)
 
         if (result.isFailure) {
             throw result.error ?: Exception("Unknown error during folder extraction")

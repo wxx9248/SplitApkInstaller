@@ -31,13 +31,13 @@ object DeviceConfigUtil {
     internal fun mapDpiToQualifier(dpi: Int): String {
         // Midpoints between adjacent density buckets
         return when {
-            dpi <= 140  -> "ldpi"     // (120+160)/2 = 140
-            dpi <= 186  -> "mdpi"     // (160+213)/2 ≈ 186
-            dpi <= 226  -> "tvdpi"    // (213+240)/2 ≈ 226
-            dpi <= 280  -> "hdpi"     // (240+320)/2 = 280
-            dpi <= 400  -> "xhdpi"    // (320+480)/2 = 400
-            dpi <= 560  -> "xxhdpi"   // (480+640)/2 = 560
-            else        -> "xxxhdpi"
+            dpi <= 140 -> "ldpi"     // (120+160)/2 = 140
+            dpi <= 186 -> "mdpi"     // (160+213)/2 ≈ 186
+            dpi <= 226 -> "tvdpi"    // (213+240)/2 ≈ 226
+            dpi <= 280 -> "hdpi"     // (240+320)/2 = 280
+            dpi <= 400 -> "xhdpi"    // (320+480)/2 = 400
+            dpi <= 560 -> "xxhdpi"   // (480+640)/2 = 560
+            else -> "xxxhdpi"
         }
     }
 }
