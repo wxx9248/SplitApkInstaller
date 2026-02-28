@@ -25,6 +25,7 @@ import top.wxx9248.splitapkinstaller.R
 import top.wxx9248.splitapkinstaller.model.ApkInfo
 import top.wxx9248.splitapkinstaller.model.SplitConfigType
 import top.wxx9248.splitapkinstaller.util.ApkUtil
+import java.util.Locale
 
 /**
  * Individual APK list item with selection checkbox and APK information.
@@ -124,14 +125,45 @@ fun ApkListItem(
     }
 }
 
+private val ABI_DISPLAY_NAMES = mapOf(
+    "arm64_v8a" to "AArch64",
+    "armeabi_v7a" to "AArch32",
+    "armeabi" to "ARM",
+    "x86" to "x86",
+    "x86_64" to "x86-64",
+    "mips" to "MIPS",
+    "mips64" to "MIPS64",
+)
+
+private val DENSITY_DISPLAY_NAMES = mapOf(
+    "ldpi" to "LDPI",
+    "mdpi" to "MDPI",
+    "tvdpi" to "TVDPI",
+    "hdpi" to "HDPI",
+    "xhdpi" to "XHDPI",
+    "xxhdpi" to "XXHDPI",
+    "xxxhdpi" to "XXXHDPI",
+    "nodpi" to "NoDPI",
+    "anydpi" to "Any DPI",
+)
+
 /**
- * Returns a display label for a split config type, or null for None.
+ * Returns a human-friendly display label for a split config type, or null for None.
  */
 internal fun splitConfigLabel(configType: SplitConfigType): String? {
     return when (configType) {
-        is SplitConfigType.Abi -> configType.qualifier
-        is SplitConfigType.Density -> configType.qualifier
-        is SplitConfigType.Language -> configType.qualifier
+        is SplitConfigType.Abi ->
+            ABI_DISPLAY_NAMES[configType.qualifier.lowercase()] ?: configType.qualifier
+
+        is SplitConfigType.Density ->
+            DENSITY_DISPLAY_NAMES[configType.qualifier.lowercase()] ?: configType.qualifier
+
+        is SplitConfigType.Language -> {
+            val languageTag = configType.qualifier.replace("_", "-")
+            val locale = Locale.forLanguageTag(languageTag)
+            locale.getDisplayName(Locale.getDefault()).ifEmpty { configType.qualifier }
+        }
+
         is SplitConfigType.None -> null
     }
 }
