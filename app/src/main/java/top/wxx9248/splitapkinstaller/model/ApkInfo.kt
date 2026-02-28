@@ -5,5 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ApkInfo(
-    val name: String, val size: Long, val isBase: Boolean = false
+    val name: String,
+    val size: Long,
+    val isBase: Boolean = false,
+    val splitConfigType: SplitConfigType = SplitConfigType.None
 ) : Parcelable

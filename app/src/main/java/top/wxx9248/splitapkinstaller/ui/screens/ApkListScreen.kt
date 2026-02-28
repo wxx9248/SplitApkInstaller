@@ -39,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -53,8 +54,12 @@ import kotlinx.serialization.json.Json
 import top.wxx9248.splitapkinstaller.R
 import top.wxx9248.splitapkinstaller.core.ApkCacheManager
 import top.wxx9248.splitapkinstaller.model.ApkInfo
+import top.wxx9248.splitapkinstaller.model.SplitConfigType
 import top.wxx9248.splitapkinstaller.ui.components.ErrorDialog
 import top.wxx9248.splitapkinstaller.util.ApkUtil
+import top.wxx9248.splitapkinstaller.util.DeviceConfig
+import top.wxx9248.splitapkinstaller.util.DeviceConfigUtil
+import top.wxx9248.splitapkinstaller.util.SplitApkSelector
 
 @Serializable
 data class ApkListRoute(
@@ -106,9 +111,10 @@ fun ApkListScreen(
                     context, packageUri, isFile
                 )
 
+                val deviceConfig = DeviceConfigUtil.detectDeviceConfig(context)
                 handleExtractionResult(result, context, isFile, onSuccess = { extractedApks ->
                     apks = extractedApks
-                    selectedApks = selectInitialApks(extractedApks)
+                    selectedApks = selectInitialApks(extractedApks, deviceConfig)
 
                     // Cache the parsed data
                     ApkCacheManager.cacheApkData(packageUri, isFile, extractedApks, selectedApks)
@@ -444,14 +450,30 @@ private fun ApkListItem(
 
                     if (apk.isBase) {
                         Surface(
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = MaterialTheme.colorScheme.primaryFixed,
                             shape = RoundedCornerShape(4.dp),
                             modifier = Modifier.padding(start = 8.dp)
                         ) {
                             Text(
                                 text = stringResource(R.string.base_apk_tag),
                                 style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSecondary,
+                                color = MaterialTheme.colorScheme.onPrimaryFixed,
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                            )
+                        }
+                    }
+
+                    splitConfigLabel(apk.splitConfigType)?.let { label ->
+                        val (bgColor, fgColor) = splitConfigColors(apk.splitConfigType)
+                        Surface(
+                            color = bgColor,
+                            shape = RoundedCornerShape(4.dp),
+                            modifier = Modifier.padding(start = 8.dp)
+                        ) {
+                            Text(
+                                text = label,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = fgColor,
                                 modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                             )
                         }
@@ -615,15 +637,18 @@ private fun handleExtractionResult(
 }
 
 /**
- * Selects initial APKs based on predefined rules (base APK and recommended splits).
+ * Selects initial APKs based on device configuration.
+ * When a base APK is present, auto-selects only matching config splits.
+ * Falls back to empty selection when no base APK is found.
  *
  * @param apks List of available APKs
+ * @param deviceConfig The device's configuration for matching splits
  * @return Set of initially selected APKs
  */
-private fun selectInitialApks(apks: List<ApkInfo>): Set<ApkInfo> {
+private fun selectInitialApks(apks: List<ApkInfo>, deviceConfig: DeviceConfig): Set<ApkInfo> {
     val baseApks = apks.filter { it.isBase }
     return if (baseApks.isNotEmpty()) {
-        apks.toSet()
+        SplitApkSelector.selectApks(apks, deviceConfig)
     } else {
         emptySet()
     }
@@ -648,6 +673,31 @@ private fun updateApkSelection(
         } else {
             currentSelection - apk
         }
+    }
+}
+
+/**
+ * Returns a display label for a split config type, or null for None.
+ */
+private fun splitConfigLabel(configType: SplitConfigType): String? {
+    return when (configType) {
+        is SplitConfigType.Abi -> configType.qualifier
+        is SplitConfigType.Density -> configType.qualifier
+        is SplitConfigType.Language -> configType.qualifier
+        is SplitConfigType.None -> null
+    }
+}
+
+/**
+ * Returns a background/foreground color pair for a split config tag.
+ */
+@Composable
+private fun splitConfigColors(configType: SplitConfigType): Pair<Color, Color> {
+    return when (configType) {
+        is SplitConfigType.Abi -> MaterialTheme.colorScheme.primary to MaterialTheme.colorScheme.onPrimary
+        is SplitConfigType.Density -> MaterialTheme.colorScheme.secondary to MaterialTheme.colorScheme.onSecondary
+        is SplitConfigType.Language -> MaterialTheme.colorScheme.tertiary to MaterialTheme.colorScheme.onTertiary
+        is SplitConfigType.None -> Color.Transparent to Color.Transparent
     }
 }
 
