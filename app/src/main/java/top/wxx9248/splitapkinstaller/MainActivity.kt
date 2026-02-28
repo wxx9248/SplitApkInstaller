@@ -22,6 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import kotlinx.serialization.json.Json
+import top.wxx9248.splitapkinstaller.core.ApkCacheManager
 import top.wxx9248.splitapkinstaller.ui.screens.ApkListRoute
 import top.wxx9248.splitapkinstaller.ui.screens.ApkListScreen
 import top.wxx9248.splitapkinstaller.ui.screens.HomeRoute
@@ -67,6 +68,7 @@ fun SplitApkInstallerApp(intent: Intent? = null) {
         intent?.let {
             if (it.action == Intent.ACTION_VIEW && it.data != null) {
                 val uri = it.data!!
+                ApkCacheManager.clearCache(uri, true)
                 val apkListRoute = ApkListRoute(
                     packageUriString = uri.toString(),
                     isFile = true

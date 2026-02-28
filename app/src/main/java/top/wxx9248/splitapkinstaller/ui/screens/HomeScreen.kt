@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.serialization.Serializable
 import top.wxx9248.splitapkinstaller.R
+import top.wxx9248.splitapkinstaller.core.ApkCacheManager
 
 @Serializable
 object HomeRoute
@@ -313,6 +314,7 @@ private fun handleFilePickerResult(
     if (result.resultCode != android.app.Activity.RESULT_OK) return
 
     val uri = result.data?.data ?: return
+    ApkCacheManager.clearCache(uri, true)
     onNavigateToApkList(ApkListRoute(uri.toString(), true))
 }
 
@@ -331,5 +333,6 @@ private fun handleFolderPickerResult(
     if (result.resultCode != android.app.Activity.RESULT_OK) return
 
     val uri = result.data?.data ?: return
+    ApkCacheManager.clearCache(uri, false)
     onNavigateToApkList(ApkListRoute(uri.toString(), false))
 }
