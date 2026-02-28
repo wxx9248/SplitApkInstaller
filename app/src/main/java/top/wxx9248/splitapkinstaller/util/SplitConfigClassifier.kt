@@ -53,7 +53,6 @@ object SplitConfigClassifier {
 
     /**
      * Computes canonical names by stripping common prefix/suffix affixes
-     * (e.g. tool-added suffixes like `-430-lspatched`) from APK filenames.
      *
      * Shared between base APK detection and config classification.
      */
@@ -113,10 +112,6 @@ object SplitConfigClassifier {
     /**
      * Determines which APK filenames correspond to the base APK by stripping
      * common prefix/suffix (at separator boundaries) to recover canonical names.
-     *
-     * For example, LSPatch-modified names like `base-430-lspatched.apk` and
-     * `split_config_arm64_v8a-430-lspatched.apk` share the suffix `-430-lspatched`.
-     * Stripping it yields `base.apk`, which is identified as the base APK.
      *
      * @return Set of original filenames that are base APKs (typically 0 or 1 element).
      */
