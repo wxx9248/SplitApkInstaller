@@ -81,7 +81,7 @@ fun InstallationScreen(
 
     var logs by remember { mutableStateOf<List<LogEntry>>(emptyList()) }
     var isInstalling by remember { mutableStateOf(false) }
-    var progress by remember { mutableStateOf(0) }
+    var progress by remember { mutableIntStateOf(0) }
     var totalProgress by remember { mutableIntStateOf(0) }
     var installationComplete by remember { mutableStateOf(false) }
     var installationSuccess by remember { mutableStateOf(false) }

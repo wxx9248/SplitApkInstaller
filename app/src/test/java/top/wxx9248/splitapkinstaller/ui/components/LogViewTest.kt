@@ -56,7 +56,7 @@ class LogViewTest {
 
         assertTrue(
             "Timestamp should be between before and after time",
-            logEntry.timestamp >= beforeTime && logEntry.timestamp <= afterTime
+            logEntry.timestamp in beforeTime..afterTime
         )
     }
 

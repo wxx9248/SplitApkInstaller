@@ -366,12 +366,12 @@ class PackageInstallerManager(private val context: Context) {
         val session = packageInstaller.openSession(sessionId)
 
         try {
-            InstallationResultReceiver.Companion.registerCallback(sessionId, callback)
+            InstallationResultReceiver.registerCallback(sessionId, callback)
 
             writeApkFilesToSession(session, apkFiles, callback)
             commitInstallationSession(session, callback)
         } catch (e: Exception) {
-            InstallationResultReceiver.Companion.unregisterCallback(sessionId)
+            InstallationResultReceiver.unregisterCallback(sessionId)
             handleSessionError(session, e, callback)
         } finally {
             session.close()

@@ -28,11 +28,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -63,15 +58,6 @@ fun ErrorDialog(
     throwable: Throwable,
     onDismiss: () -> Unit
 ) {
-    var copySuccessMessage by remember { mutableStateOf(false) }
-
-    LaunchedEffect(copySuccessMessage) {
-        if (copySuccessMessage) {
-            kotlinx.coroutines.delay(2000)
-            copySuccessMessage = false
-        }
-    }
-
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(
@@ -82,8 +68,6 @@ fun ErrorDialog(
     ) {
         ErrorDialogContent(
             throwable = throwable,
-            copySuccessMessage = copySuccessMessage,
-            onCopySuccess = { copySuccessMessage = true },
             onDismiss = onDismiss
         )
     }
@@ -93,15 +77,11 @@ fun ErrorDialog(
  * Main content of the error dialog containing header, message, stack trace, and close button.
  *
  * @param throwable The exception/throwable to display
- * @param copySuccessMessage Whether copy success message should be shown
- * @param onCopySuccess Callback invoked when stack trace is successfully copied
  * @param onDismiss Callback invoked when the dialog is dismissed
  */
 @Composable
 private fun ErrorDialogContent(
     throwable: Throwable,
-    copySuccessMessage: Boolean,
-    onCopySuccess: () -> Unit,
     onDismiss: () -> Unit
 ) {
     Card(
@@ -124,11 +104,7 @@ private fun ErrorDialogContent(
 
             ErrorMessage(throwable = throwable)
 
-            StackTraceSection(
-                throwable = throwable,
-                copySuccessMessage = copySuccessMessage,
-                onCopySuccess = onCopySuccess
-            )
+            StackTraceSection(throwable = throwable)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -186,27 +162,22 @@ private fun ErrorMessage(throwable: Throwable) {
  * Stack trace section with header and scrollable content.
  *
  * @param throwable The exception/throwable whose stack trace to display
- * @param copySuccessMessage Whether copy success message should be shown
- * @param onCopySuccess Callback invoked when stack trace is successfully copied
  */
 @Composable
 private fun StackTraceSection(
-    throwable: Throwable,
-    copySuccessMessage: Boolean,
-    onCopySuccess: () -> Unit
+    throwable: Throwable
 ) {
     val context = LocalContext.current
+    val copiedToClipboardText = stringResource(R.string.copied_to_clipboard)
 
     StackTraceHeader(
-        copySuccessMessage = copySuccessMessage,
         onCopyClick = {
             copyStackTraceToClipboard(context, throwable) {
                 Toast.makeText(
                     context,
-                    context.getString(R.string.copied_to_clipboard),
+                    copiedToClipboardText,
                     Toast.LENGTH_SHORT
                 ).show()
-                onCopySuccess()
             }
         }
     )
@@ -219,12 +190,10 @@ private fun StackTraceSection(
 /**
  * Header for the stack trace section with copy button.
  *
- * @param copySuccessMessage Whether copy success message should be shown
  * @param onCopyClick Callback invoked when copy button is clicked
  */
 @Composable
 private fun StackTraceHeader(
-    copySuccessMessage: Boolean,
     onCopyClick: () -> Unit
 ) {
     Row(

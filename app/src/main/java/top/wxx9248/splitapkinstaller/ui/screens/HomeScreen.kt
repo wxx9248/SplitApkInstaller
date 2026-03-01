@@ -21,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -43,17 +42,16 @@ object HomeRoute
 fun HomeScreen(
     onNavigateToApkList: (ApkListRoute) -> Unit
 ) {
-    val context = LocalContext.current
     val filePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        handlePickerResult(result, context, isFile = true, onNavigateToApkList)
+        handlePickerResult(result, isFile = true, onNavigateToApkList)
     }
 
     val folderPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        handlePickerResult(result, context, isFile = false, onNavigateToApkList)
+        handlePickerResult(result, isFile = false, onNavigateToApkList)
     }
 
     val isLandscape =
@@ -310,13 +308,11 @@ private fun createFolderPickerIntent(): Intent {
  * Handles the result from a file or folder picker activity.
  *
  * @param result The activity result from the picker
- * @param context Android context for accessing system services
  * @param isFile Whether the picker was for a file (true) or folder (false)
  * @param onNavigateToApkList Callback to navigate to APK list screen with the selected URI
  */
 private fun handlePickerResult(
     result: androidx.activity.result.ActivityResult,
-    context: android.content.Context,
     isFile: Boolean,
     onNavigateToApkList: (ApkListRoute) -> Unit
 ) {

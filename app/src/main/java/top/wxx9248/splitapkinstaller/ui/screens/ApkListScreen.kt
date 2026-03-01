@@ -357,7 +357,7 @@ private fun InstallButton(
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val selectedApkNames = selectedApks.map { it -> it.name }
+    val selectedApkNames = selectedApks.map { it.name }
 
     Surface(
         modifier = Modifier.fillMaxWidth(), shadowElevation = 8.dp

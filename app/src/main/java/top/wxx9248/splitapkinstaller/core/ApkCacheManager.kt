@@ -46,14 +46,6 @@ object ApkCacheManager {
     }
 
     /**
-     * Check if cached data exists for the given parameters
-     */
-    fun hasCachedData(packageUri: Uri, isFile: Boolean): Boolean {
-        val key = generateCacheKey(packageUri, isFile)
-        return cache.containsKey(key)
-    }
-
-    /**
      * Update selected APKs in cache without re-parsing
      */
     fun updateSelectedApks(
@@ -75,10 +67,4 @@ object ApkCacheManager {
         cache.remove(key)
     }
 
-    /**
-     * Clear all cached data
-     */
-    fun clearAllCache() {
-        cache.clear()
-    }
 }

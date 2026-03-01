@@ -14,7 +14,7 @@ class ProgressCardTest {
 
     @Test
     fun `ProgressState enum should have all expected values`() {
-        val states = ProgressState.values()
+        val states = ProgressState.entries
         assertEquals(4, states.size)
         assertTrue(states.contains(ProgressState.IDLE))
         assertTrue(states.contains(ProgressState.IN_PROGRESS))

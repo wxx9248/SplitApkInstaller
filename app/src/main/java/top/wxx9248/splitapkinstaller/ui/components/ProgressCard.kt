@@ -15,7 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -171,7 +171,6 @@ private fun ProgressDetails(
     totalProgress: Int,
     filesProcessedFormat: String
 ) {
-    val context = LocalContext.current
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -183,7 +182,7 @@ private fun ProgressDetails(
         )
 
         Text(
-            text = context.getString(
+            text = stringResource(
                 R.string.progress_percentage,
                 if (totalProgress > 0) ((progress.toFloat() / totalProgress) * 100).toInt() else 0
             ),
