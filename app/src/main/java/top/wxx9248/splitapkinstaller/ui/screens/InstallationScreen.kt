@@ -15,19 +15,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -51,6 +45,7 @@ import top.wxx9248.splitapkinstaller.R
 import top.wxx9248.splitapkinstaller.core.ApkCacheManager
 import top.wxx9248.splitapkinstaller.core.PackageInstallerManager
 import top.wxx9248.splitapkinstaller.ui.components.ErrorDialog
+import top.wxx9248.splitapkinstaller.ui.components.NavigationTopBar
 import top.wxx9248.splitapkinstaller.ui.components.LogEntry
 import top.wxx9248.splitapkinstaller.ui.components.LogLevel
 import top.wxx9248.splitapkinstaller.ui.components.LogView
@@ -72,7 +67,6 @@ data class InstallationRoute(
  * @param onNavigateBack Callback to navigate back to the previous screen
  * @param onNavigateToHome Callback to navigate to the home screen
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InstallationScreen(
     packageUri: Uri,
@@ -171,7 +165,8 @@ fun InstallationScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        InstallationTopBar(
+        NavigationTopBar(
+            title = stringResource(R.string.installing_apks),
             onNavigateBack = handleNavigation
         )
 
@@ -216,33 +211,6 @@ fun InstallationScreen(
                 errorException = null
             })
     }
-}
-
-/**
- * Top app bar for the installation screen with back navigation.
- *
- * @param onNavigateBack Callback to handle back navigation
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun InstallationTopBar(
-    onNavigateBack: () -> Unit
-) {
-    TopAppBar(title = {
-        Text(
-            text = stringResource(R.string.installing_apks),
-            style = MaterialTheme.typography.titleLarge
-        )
-    }, navigationIcon = {
-        IconButton(
-            onClick = onNavigateBack
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = stringResource(R.string.back)
-            )
-        }
-    })
 }
 
 /**
@@ -478,16 +446,6 @@ fun InstallationScreenPreview() {
             selectedApkNames = listOf("base.apk", "config.apk"),
             onNavigateBack = {},
             onNavigateToHome = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun InstallationTopBarPreview() {
-    MaterialTheme {
-        InstallationTopBar(
-            onNavigateBack = {}
         )
     }
 }

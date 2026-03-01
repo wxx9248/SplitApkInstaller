@@ -47,13 +47,13 @@ fun HomeScreen(
     val filePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        handleFilePickerResult(result, context, onNavigateToApkList)
+        handlePickerResult(result, context, isFile = true, onNavigateToApkList)
     }
 
     val folderPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        handleFolderPickerResult(result, context, onNavigateToApkList)
+        handlePickerResult(result, context, isFile = false, onNavigateToApkList)
     }
 
     val isLandscape =
@@ -307,39 +307,22 @@ private fun createFolderPickerIntent(): Intent {
 }
 
 /**
- * Handles the result from the file picker activity.
+ * Handles the result from a file or folder picker activity.
  *
- * @param result The activity result from the file picker
+ * @param result The activity result from the picker
  * @param context Android context for accessing system services
- * @param onNavigateToApkList Callback to navigate to APK list screen with selected file
+ * @param isFile Whether the picker was for a file (true) or folder (false)
+ * @param onNavigateToApkList Callback to navigate to APK list screen with the selected URI
  */
-private fun handleFilePickerResult(
+private fun handlePickerResult(
     result: androidx.activity.result.ActivityResult,
     context: android.content.Context,
+    isFile: Boolean,
     onNavigateToApkList: (ApkListRoute) -> Unit
 ) {
     if (result.resultCode != android.app.Activity.RESULT_OK) return
 
     val uri = result.data?.data ?: return
-    ApkCacheManager.clearCache(uri, true)
-    onNavigateToApkList(ApkListRoute(uri.toString(), true))
-}
-
-/**
- * Handles the result from the folder picker activity.
- *
- * @param result The activity result from the folder picker
- * @param context Android context for accessing system services
- * @param onNavigateToApkList Callback to navigate to APK list screen with selected folder
- */
-private fun handleFolderPickerResult(
-    result: androidx.activity.result.ActivityResult,
-    context: android.content.Context,
-    onNavigateToApkList: (ApkListRoute) -> Unit
-) {
-    if (result.resultCode != android.app.Activity.RESULT_OK) return
-
-    val uri = result.data?.data ?: return
-    ApkCacheManager.clearCache(uri, false)
-    onNavigateToApkList(ApkListRoute(uri.toString(), false))
+    ApkCacheManager.clearCache(uri, isFile)
+    onNavigateToApkList(ApkListRoute(uri.toString(), isFile))
 }

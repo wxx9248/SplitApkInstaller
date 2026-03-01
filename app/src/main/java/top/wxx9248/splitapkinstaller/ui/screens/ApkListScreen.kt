@@ -21,19 +21,15 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -57,6 +53,7 @@ import top.wxx9248.splitapkinstaller.core.ApkCacheManager
 import top.wxx9248.splitapkinstaller.model.ApkInfo
 import top.wxx9248.splitapkinstaller.ui.components.ApkListItem
 import top.wxx9248.splitapkinstaller.ui.components.ErrorDialog
+import top.wxx9248.splitapkinstaller.ui.components.NavigationTopBar
 import top.wxx9248.splitapkinstaller.util.ApkSourceReader
 import top.wxx9248.splitapkinstaller.util.ApkUtil
 import top.wxx9248.splitapkinstaller.util.DeviceConfig
@@ -76,7 +73,6 @@ data class ApkListRoute(
  * @param onNavigateBack Callback to navigate back to the previous screen
  * @param onNavigateToInstallation Callback to navigate to installation screen with selected APKs
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApkListScreen(
     packageUri: Uri,
@@ -135,7 +131,10 @@ fun ApkListScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        ApkListTopBar(onNavigateBack)
+        NavigationTopBar(
+            title = stringResource(R.string.select_apks_to_install),
+            onNavigateBack = onNavigateBack
+        )
 
         when {
             isLoading -> LoadingContent(isFile = isFile)
@@ -160,31 +159,6 @@ fun ApkListScreen(
                 errorMessage = null
             })
     }
-}
-
-/**
- * Top app bar for the APK list screen with back navigation.
- *
- * @param onNavigateBack Callback to navigate back to the previous screen
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun ApkListTopBar(
-    onNavigateBack: () -> Unit
-) {
-    TopAppBar(title = {
-        Text(
-            text = stringResource(R.string.select_apks_to_install),
-            style = MaterialTheme.typography.titleLarge
-        )
-    }, navigationIcon = {
-        IconButton(onClick = onNavigateBack) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = stringResource(R.string.back)
-            )
-        }
-    })
 }
 
 /**
@@ -436,16 +410,6 @@ fun ApkListScreenPreview() {
             isFile = true,
             onNavigateBack = { },
             onNavigateToInstallation = { })
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ApkListTopBarPreview() {
-    MaterialTheme {
-        ApkListTopBar(
-            onNavigateBack = {}
-        )
     }
 }
 
