@@ -1,5 +1,6 @@
 package top.wxx9248.splitapkinstaller.ui.screens
 
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -7,6 +8,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -35,6 +38,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -266,31 +270,131 @@ private fun InstallationContent(
     resultMessage: String?,
     onNavigateBack: () -> Unit
 ) {
+    val isLandscape =
+        LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    val progressState = deriveProgressState(isInstalling, installationComplete, installationSuccess)
+    val progressTexts = installationProgressTexts()
+
     AnimatedVisibility(
         visible = showContent, enter = fadeIn(), exit = fadeOut()
     ) {
+        if (isLandscape) {
+            InstallationContentLandscape(
+                progressState = progressState,
+                progress = progress,
+                totalProgress = totalProgress,
+                progressTexts = progressTexts,
+                logs = logs,
+                installationComplete = installationComplete,
+                installationSuccess = installationSuccess,
+                resultMessage = resultMessage,
+                onNavigateBack = onNavigateBack
+            )
+        } else {
+            InstallationContentPortrait(
+                progressState = progressState,
+                progress = progress,
+                totalProgress = totalProgress,
+                progressTexts = progressTexts,
+                logs = logs,
+                installationComplete = installationComplete,
+                installationSuccess = installationSuccess,
+                resultMessage = resultMessage,
+                onNavigateBack = onNavigateBack
+            )
+        }
+    }
+}
+
+private fun deriveProgressState(
+    isInstalling: Boolean,
+    installationComplete: Boolean,
+    installationSuccess: Boolean
+): ProgressState = when {
+    isInstalling -> ProgressState.IN_PROGRESS
+    installationComplete && installationSuccess -> ProgressState.COMPLETED_SUCCESS
+    installationComplete && !installationSuccess -> ProgressState.COMPLETED_FAILURE
+    else -> ProgressState.IDLE
+}
+
+@Composable
+private fun installationProgressTexts(): ProgressTexts = ProgressTexts(
+    title = stringResource(R.string.installation_progress),
+    inProgressText = stringResource(R.string.installing),
+    completedSuccessText = stringResource(R.string.completed),
+    completedFailureText = stringResource(R.string.failed),
+    filesProcessedFormat = stringResource(R.string.files_processed_format)
+)
+
+@Composable
+private fun InstallationContentPortrait(
+    progressState: ProgressState,
+    progress: Int,
+    totalProgress: Int,
+    progressTexts: ProgressTexts,
+    logs: List<LogEntry>,
+    installationComplete: Boolean,
+    installationSuccess: Boolean,
+    resultMessage: String?,
+    onNavigateBack: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        ProgressCard(
+            state = progressState,
+            progress = progress,
+            totalProgress = totalProgress,
+            texts = progressTexts,
+            modifier = Modifier.padding(16.dp)
+        )
+
+        LogView(
+            logs = logs, modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 16.dp)
+        )
+
+        if (installationComplete) {
+            CompletionSection(
+                installationSuccess = installationSuccess,
+                resultMessage = resultMessage,
+                onNavigateBack = onNavigateBack
+            )
+        }
+    }
+}
+
+@Composable
+private fun InstallationContentLandscape(
+    progressState: ProgressState,
+    progress: Int,
+    totalProgress: Int,
+    progressTexts: ProgressTexts,
+    logs: List<LogEntry>,
+    installationComplete: Boolean,
+    installationSuccess: Boolean,
+    resultMessage: String?,
+    onNavigateBack: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .weight(2f)
+                .fillMaxHeight()
         ) {
             ProgressCard(
-                state = when {
-                    isInstalling -> ProgressState.IN_PROGRESS
-                    installationComplete && installationSuccess -> ProgressState.COMPLETED_SUCCESS
-                    installationComplete && !installationSuccess -> ProgressState.COMPLETED_FAILURE
-                    else -> ProgressState.IDLE
-                }, progress = progress, totalProgress = totalProgress, texts = ProgressTexts(
-                    title = stringResource(R.string.installation_progress),
-                    inProgressText = stringResource(R.string.installing),
-                    completedSuccessText = stringResource(R.string.completed),
-                    completedFailureText = stringResource(R.string.failed),
-                    filesProcessedFormat = stringResource(R.string.files_processed_format)
-                ), modifier = Modifier.padding(16.dp)
-            )
-
-            LogView(
-                logs = logs, modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 16.dp)
+                state = progressState,
+                progress = progress,
+                totalProgress = totalProgress,
+                texts = progressTexts,
+                modifier = Modifier.padding(8.dp)
             )
 
             if (installationComplete) {
@@ -301,6 +405,13 @@ private fun InstallationContent(
                 )
             }
         }
+
+        LogView(
+            logs = logs, modifier = Modifier
+                .weight(3f)
+                .fillMaxHeight()
+                .padding(8.dp)
+        )
     }
 }
 

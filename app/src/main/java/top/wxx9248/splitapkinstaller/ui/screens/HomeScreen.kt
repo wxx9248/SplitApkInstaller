@@ -1,6 +1,7 @@
 package top.wxx9248.splitapkinstaller.ui.screens
 
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -54,19 +56,24 @@ fun HomeScreen(
         handleFolderPickerResult(result, context, onNavigateToApkList)
     }
 
+    val isLandscape =
+        LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val horizontalPadding = if (isLandscape) 480.dp else 24.dp
+    val spacerHeight = if (isLandscape) 24.dp else 72.dp
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .padding(horizontal = horizontalPadding, vertical = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         TitleSection()
-        Spacer(modifier = Modifier.height(72.dp))
+        Spacer(modifier = Modifier.height(spacerHeight))
         ActionButtonsSection(
             filePickerLauncher = filePickerLauncher, folderPickerLauncher = folderPickerLauncher
         )
-        Spacer(modifier = Modifier.height(72.dp))
+        Spacer(modifier = Modifier.height(spacerHeight))
         InfoSection()
     }
 }

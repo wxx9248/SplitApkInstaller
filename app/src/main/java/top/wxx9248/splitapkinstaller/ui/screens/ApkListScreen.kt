@@ -1,5 +1,6 @@
 package top.wxx9248.splitapkinstaller.ui.screens
 
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -14,6 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -39,6 +43,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -277,6 +282,9 @@ private fun ApkListContent(
     isFile: Boolean,
     onNavigateToInstallation: (InstallationRoute) -> Unit
 ) {
+    val isLandscape =
+        LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+
     AnimatedVisibility(
         visible = showContent, enter = fadeIn(), exit = fadeOut()
     ) {
@@ -287,18 +295,37 @@ private fun ApkListContent(
                 NoBaseApkWarning()
             }
 
-            LazyColumn(
-                modifier = Modifier.weight(1f),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(apks) { apk ->
-                    ApkListItem(
-                        apk = apk,
-                        isSelected = selectedApks.contains(apk),
-                        onSelectionChanged = { isSelected ->
-                            onSelectionChanged(apk, isSelected)
-                        })
+            if (isLandscape) {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(apks) { apk ->
+                        ApkListItem(
+                            apk = apk,
+                            isSelected = selectedApks.contains(apk),
+                            onSelectionChanged = { isSelected ->
+                                onSelectionChanged(apk, isSelected)
+                            })
+                    }
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(apks) { apk ->
+                        ApkListItem(
+                            apk = apk,
+                            isSelected = selectedApks.contains(apk),
+                            onSelectionChanged = { isSelected ->
+                                onSelectionChanged(apk, isSelected)
+                            })
+                    }
                 }
             }
 
