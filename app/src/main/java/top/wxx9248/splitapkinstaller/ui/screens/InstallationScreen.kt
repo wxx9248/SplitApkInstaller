@@ -45,10 +45,10 @@ import top.wxx9248.splitapkinstaller.R
 import top.wxx9248.splitapkinstaller.core.ApkCacheManager
 import top.wxx9248.splitapkinstaller.core.PackageInstallerManager
 import top.wxx9248.splitapkinstaller.ui.components.ErrorDialog
-import top.wxx9248.splitapkinstaller.ui.components.NavigationTopBar
 import top.wxx9248.splitapkinstaller.ui.components.LogEntry
 import top.wxx9248.splitapkinstaller.ui.components.LogLevel
 import top.wxx9248.splitapkinstaller.ui.components.LogView
+import top.wxx9248.splitapkinstaller.ui.components.NavigationTopBar
 import top.wxx9248.splitapkinstaller.ui.components.ProgressCard
 import top.wxx9248.splitapkinstaller.ui.components.ProgressState
 import top.wxx9248.splitapkinstaller.ui.components.ProgressTexts
