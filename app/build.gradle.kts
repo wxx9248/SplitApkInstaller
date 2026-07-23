@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "top.wxx9248.splitapkinstaller"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "top.wxx9248.splitapkinstaller"
         minSdk = 33
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 3
         versionName = "1.2.0"
 
@@ -49,7 +49,6 @@ android {
     buildFeatures {
         compose = true
     }
-    compileSdkMinor = 1
     ndkVersion = "29.0.14206865"
 }
 
