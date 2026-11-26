@@ -7,7 +7,11 @@ plugins {
 
 android {
     namespace = "top.wxx9248.splitapkinstaller"
-    compileSdk = 37
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 2
+        }
+    }
 
     defaultConfig {
         applicationId = "top.wxx9248.splitapkinstaller"
